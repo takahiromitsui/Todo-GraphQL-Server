@@ -44,8 +44,24 @@ def resolve_todos(obj, info):
         }
     return payload
 
+def resolve_todo(obj, info, id):
+    try:
+        todo = Todo.query.get(id)
+        payload = {
+            "success": True,
+            "todo": todo.to_dict()
+        }
+    except Exception as e:
+        payload = {
+            "success": False,
+            "errors": [f"item matching id {id} not found"]
+        }
+    return payload
+    
+
 query = ObjectType("Query")
 query.set_field("todos", resolve_todos)
+query.set_field("todo", resolve_todo)
 
 type_defs = gql(load_schema_from_path("schema.graphql"))
 schema = make_executable_schema(type_defs, query, snake_case_fallback_resolvers)
