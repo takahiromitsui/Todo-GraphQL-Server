@@ -18,13 +18,16 @@ class Todo(db.Model):
     id = db.Column(db.String(36), primary_key=True, default=str(uuid.uuid4()))
     title = db.Column(db.String(80), nullable=False)
     completed = db.Column(db.Boolean, nullable=False)
-    
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=db.func.now())
 
     def to_dict(self):
         return {
             "id": self.id,
             "title": self.title,
-            "completed": self.completed
+            "completed": self.completed,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
         }
 
 def resolve_todos(obj, info):

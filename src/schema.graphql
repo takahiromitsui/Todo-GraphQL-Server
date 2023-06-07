@@ -11,10 +11,22 @@ type Todo {
   updatedAt: String!
 }
 
-type Query {
-  todos: [Todo!]!
+type TodoResult {
+    success: Boolean!
+    errors: [String]
+    todo: Todo
 }
 
+type TodosResult {
+    success: Boolean!
+    errors: [String]
+    todos: [Todo]
+}
+
+type Query {
+    todos: TodosResult!
+    todo(todoId: ID!): TodoResult!
+}
 type Mutation {
   createTodo(
     title: String!
