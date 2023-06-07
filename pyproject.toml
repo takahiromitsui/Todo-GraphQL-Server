@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ariadne-todo"
+version = "0.1.0"
+description = ""
+authors = ["Takahiro Mitsui <takahiro.mitsui@code.berlin>"]
+readme = "README.md"
+packages = [{include = "ariadne_todo"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+ariadne = "^0.19.1"
+flask = "^2.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
