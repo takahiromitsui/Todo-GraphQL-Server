@@ -10,6 +10,7 @@ packages = [{include = "ariadne_todo"}]
 python = "^3.10"
 ariadne = "^0.19.1"
 flask = "^2.3.2"
+flask-sqlalchemy = "^3.0.3"
 
 
 [build-system]
