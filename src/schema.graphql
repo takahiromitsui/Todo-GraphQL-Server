@@ -30,10 +30,9 @@ type Query {
 type Mutation {
   createTodo(
     title: String!
-    completed: Boolean!
-  ): Todo!
+  ): TodoResult!
   markCompleted(
     id: ID!
     completed: Boolean!
-  ): Todo!
+  ): TodoResult!
 }

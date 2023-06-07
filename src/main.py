@@ -19,7 +19,7 @@ class Todo(db.Model):
     title = db.Column(db.String(80), nullable=False)
     completed = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
-    updated_at = db.Column(db.DateTime(timezone=True), onupdate=db.func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
     def to_dict(self):
         return {
@@ -57,14 +57,36 @@ def resolve_todo(obj, info, id):
             "errors": [f"item matching id {id} not found"]
         }
     return payload
+
+def resolve_create_todo_mutation(obj, info, title):
+    try:
+        todo = Todo(
+            title=title,
+            completed=False
+        )
+        db.session.add(todo)
+        db.session.commit()
+        payload = {
+            "success": True,
+            "todo": todo.to_dict()
+        }
+    except Exception as e:
+        payload = {
+            "success": False,
+            "errors": [str(e)]
+        }
+    return payload
     
 
 query = ObjectType("Query")
 query.set_field("todos", resolve_todos)
 query.set_field("todo", resolve_todo)
 
+mutation = ObjectType("Mutation")
+mutation.set_field("createTodo", resolve_create_todo_mutation)
+
 type_defs = gql(load_schema_from_path("schema.graphql"))
-schema = make_executable_schema(type_defs, query, snake_case_fallback_resolvers)
+schema = make_executable_schema(type_defs, query, mutation, snake_case_fallback_resolvers)
 
 @app.route("/", methods=['GET'])
 def hello():
