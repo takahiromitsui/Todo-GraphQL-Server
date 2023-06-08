@@ -92,6 +92,22 @@ def resolve_update_todo_completed(obj, info, id):
             "errors": [str(e)]
         }
     return payload
+
+def resolve_delete_todo(obj, info, id):
+    try:
+        todo = Todo.query.get(id)
+        db.session.delete(todo)
+        db.session.commit()
+        payload = {
+            "success": True,
+            "todo": todo.to_dict()
+        }
+    except Exception as e:
+        payload = {
+            "success": False,
+            "errors": [str(e)]
+        }
+    return payload
     
 
 query = ObjectType("Query")
@@ -101,6 +117,7 @@ query.set_field("todo", resolve_todo)
 mutation = ObjectType("Mutation")
 mutation.set_field("createTodo", resolve_create_todo_mutation)
 mutation.set_field("updateTodoCompleted", resolve_update_todo_completed)
+mutation.set_field("deleteTodo", resolve_delete_todo)
 
 type_defs = gql(load_schema_from_path("schema.graphql"))
 schema = make_executable_schema(type_defs, query, mutation, snake_case_fallback_resolvers)

@@ -34,4 +34,7 @@ type Mutation {
   updateTodoCompleted(
     id: ID!
   ): TodoResult!
+  deleteTodo(
+    id: ID!
+  ): TodoResult!
 }
