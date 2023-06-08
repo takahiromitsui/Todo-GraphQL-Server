@@ -31,8 +31,7 @@ type Mutation {
   createTodo(
     title: String!
   ): TodoResult!
-  markCompleted(
+  updateTodoCompleted(
     id: ID!
-    completed: Boolean!
   ): TodoResult!
 }
