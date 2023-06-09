@@ -1,10 +1,11 @@
 # Todo GraphQL Server
 
 This is a simple Todo GraphQL server implemented using Flask, Ariadne, and flask-migrate. The server allows you to manage a collection of Todo items through a GraphQL API.
+I also created a [TODO client](https://github.com/takahiromitsui/todo-graphql-frontend.git) with Apollo and NextJS.
 
 ## Installation
 
-1. Clone the repository: `git clone <repository-url>`
+1. Clone the repository: `git clone https://github.com/takahiromitsui/Todo-GraphQL-Server.git`
 2. Change into the project directory: `cd <project-directory>`
 3. Install Poetry (if not already installed): [Poetry Installation](https://python-poetry.org/docs/#installation)
 4. Install the project dependencies: `poetry install`
